@@ -2,14 +2,13 @@
 #include "homie-node-collection.h"
 
 #define FW_VERSION "1.0.1"
-#define SERIAL_SPEED 115200
 
 // Uncomment this line if you want to see the OTA progress
 // on the OLED display
-#define DISPLAY_LOGGER
+#define DISPLAY_SSD1306
 
-#ifdef DISPLAY_LOGGER
-  #define FW_NAME "ota-basic-display"
+#ifdef DISPLAY_SSD1306
+  #define FW_NAME "ota-display-ssd1306"
   // #define DISPLAY_HEIGHT 32
 
   // Setup OTA logging via OLED dislpay and Homie logger
@@ -17,11 +16,11 @@
 
   // Put your settings for the I2C bus here
   const int I2C_DISPLAY_ADDRESS = 0x3c;
-  const int SDA_PIN = 4;
-  const int SCL_PIN = 5;
+  const int SDA_PIN = 5;
+  const int SCL_PIN = 4;
 
   SSD1306Wire display(I2C_DISPLAY_ADDRESS, SDA_PIN, SCL_PIN);
-  OtaDisplay ota(&display, DISPLAY_HEIGHT);
+  OtaDisplaySSD1306 ota(display, NULL);
 #else
   #define FW_NAME "ota-basic-serial"
   // Setup OTA logging via Homie logger
@@ -45,7 +44,7 @@ void setup() {
   // show state and last reset reason
   welcome();
 
-#ifdef DISPLAY_LOGGER
+#ifdef DISPLAY_SSD1306
   // initlalize display
   display.init();
   display.clear();
@@ -53,7 +52,7 @@ void setup() {
   display.setColor(WHITE);
   display.setFont(ArialMT_Plain_10);
   display.setTextAlignment(TEXT_ALIGN_CENTER);
-  display.drawString(63, DISPLAY_HEIGHT/2, (String)FW_NAME + " " + (String)FW_VERSION);
+  display.drawString(64, DISPLAY_HEIGHT/2, (String)FW_NAME + " " + (String)FW_VERSION);
   display.display();
 #endif
 
