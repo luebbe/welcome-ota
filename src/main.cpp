@@ -1,12 +1,12 @@
-#include <Homie.h>
-#include "homie-node-collection.h"
-
 #define FW_VERSION "1.0.2"
 
-// Uncomment the line corresponding to the OLED driver you want to use to
-// show the OTA progress on the OLED display. Or none if you want just serial logging
-#define DISPLAY_SSD1306
-// #define DISPLAY_U8G2
+// Default OTA Progress is shown on the serial console.
+// Uncomment the line corresponding to the progress class you want to use
+// in platformio.ini
+
+#include <Homie.h>
+#include "ota.hpp"
+#include "welcome.hpp"
 
 const int PIN_SDA = 5;
 const int PIN_SCL = 4;
@@ -16,7 +16,6 @@ const int PIN_SCL = 4;
 //
 #if defined(DISPLAY_SSD1306)
 #define FW_NAME "ota-ssd1306"
-#include <SSD1306.h>
 
 // Put your settings for the I2C bus here
 const int I2C_DISPLAY_ADDRESS = 0x3c;
@@ -43,7 +42,6 @@ void showStartupInfo()
 //
 #elif defined(DISPLAY_U8G2)
 #define FW_NAME "ota-u8g2"
-#include <u8g2lib.h>
 
 const int PIN_RESET = U8X8_PIN_NONE; // The reset pin of the SD1306 is not connected
 
