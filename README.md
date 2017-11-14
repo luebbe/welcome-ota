@@ -1,11 +1,19 @@
 # Homie OTA
+Small helpers for OTA (over the air update) and status display.
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Basic OTA example using Homie and ArduinoOTA
+## main.cpp
+Basic OTA example using Homie and ArduinoOTA using one of the three classes from ota.cpp
 
-OTA progress is shown on the serial console and, when an OLED display is connected and configured properly, also on the display
+These are additions for software Projects using the [Homie (v2.0)](https://github.com/marvinroger/homie-esp8266) framework. 
+Developed using [PlatformIO](https://github.com/platformio)
 
-The software is based on [Homie (v2.0)](https://github.com/marvinroger/homie-esp8266) and is developed using [PlatformIO](https://github.com/platformio)
+## ota.cpp
+Helper classes for that display the over the air update status using different display drivers. Uncomment the desired version in platformio.ini
+* plain serial using Homie.getlogger()
+* [ssd1306 library](https://github.com/squix78/esp8266-oled-ssd1306.git)
+* [u8g2 library](https://github.com/olikraus/u8g2.git)
 
-The Homie 2.0 framework https://github.com/marvinroger/homie-esp8266.git, is *not* included as lib_dep in platformio.ini, because I installed it into the global PlatformIO library storage.
-
+## welcome.cpp
+Helper that displays info about the esp, reset reason and more on the serial console upon boot.
