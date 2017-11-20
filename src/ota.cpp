@@ -114,7 +114,7 @@ void OtaLogger::onProgress(unsigned int progress, unsigned int total)
 };
 
 // -----------------------------------------------------------------------------
-// Base class for the two loggers using a OLED display
+// Base class for the two loggers using an OLED display
 // -----------------------------------------------------------------------------
 
 OtaDisplay::OtaDisplay(TOtaCallback otaCallback)

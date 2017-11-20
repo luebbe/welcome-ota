@@ -12,16 +12,6 @@
 #include <Homie.h> // for Homie logger output
 #include <ArduinoOTA.h>
 
-#if defined(DISPLAY_SSD1306)
-// for display output via https://github.com/squix78/esp8266-oled-ssd1306 library
-#include <SSD1306Wire.h> 
-#define cMediumFont ArialMT_Plain_10
-#elif defined(DISPLAY_U8G2)
-// for display output via https://github.com/olikraus/u8g2 library
-#include <u8g2lib.h> 
-#define cMediumFont u8g2_font_helvR14_tf
-#endif
-
 typedef std::function<void(void)> TOtaCallback;
 
 // -----------------------------------------------------------------------------
@@ -49,7 +39,7 @@ public:
 };
 
 // -----------------------------------------------------------------------------
-// Base class for the two loggers using a OLED display
+// Base class for the two loggers using an OLED display
 // -----------------------------------------------------------------------------
 
 class OtaDisplay : public OtaLogger
@@ -65,9 +55,13 @@ public:
 };
 
 // -----------------------------------------------------------------------------
-// OTA info via SSD1306 128x64 OLED Display using the esp8266-oled-ssd1306 library
+// OTA info via 128x64 OLED Display using the esp8266-oled-ssd1306 library
 // -----------------------------------------------------------------------------
 #if defined(DISPLAY_SSD1306)
+
+#include <SSD1306Wire.h> 
+#define cMediumFont ArialMT_Plain_10
+
 class OtaDisplaySSD1306 : public OtaDisplay
 {
 private:
@@ -84,9 +78,13 @@ public:
 };
 
 // -----------------------------------------------------------------------------
-// OTA info via OLED Display using the u8g2 library
+// OTA info via 128x32 OLED Display using the u8g2 library
 // -----------------------------------------------------------------------------
 #elif defined(DISPLAY_U8G2)
+
+#include <u8g2lib.h> 
+#define cMediumFont u8g2_font_helvR14_tf
+
 class OtaDisplayU8G2 : public OtaDisplay
 {
 private:
