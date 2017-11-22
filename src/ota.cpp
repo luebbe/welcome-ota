@@ -170,7 +170,7 @@ void OtaDisplaySSD1306::drawMessage(const char *message)
 void OtaDisplaySSD1306::onProgress(unsigned int progress, unsigned int total)
 {
   OtaLogger::onProgress(progress, total);
-  _display.drawProgressBar(2, 28, 124, 8, progress / (total / 100));
+  _display.drawProgressBar(2, 30, 124, 8, progress / (total / 100));
   _display.display();
 };
 

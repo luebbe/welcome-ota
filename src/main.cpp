@@ -43,7 +43,7 @@ WelcomeU8G2 welcome(u8g2, FW_NAME, FW_VERSION);
 #else
 #define FW_NAME "ota-basic-serial"
 OtaLogger ota;
-Welcome welcome;
+Welcome welcome(FW_NAME, FW_VERSION);
 #endif
 
 void setupHandler()

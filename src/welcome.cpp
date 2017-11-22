@@ -77,10 +77,10 @@ void WelcomeU8G2::show()
   _display.setFont(cMediumFont);
 
   uint8_t _strWidth = _display.getStrWidth(_fw_name);
-  _display.drawUTF8((128 - _strWidth) / 2, 12, _fw_name);
+  _display.drawUTF8((128 - _strWidth) / 2, 14, _fw_name);
 
   _strWidth = _display.getStrWidth(_fw_version);
-  _display.drawUTF8((128 - _strWidth) / 2, 30, _fw_version);
+  _display.drawUTF8((128 - _strWidth) / 2, 32, _fw_version);
 
   _display.sendBuffer();
 }

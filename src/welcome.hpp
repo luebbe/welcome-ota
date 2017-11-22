@@ -24,7 +24,7 @@ public:
 #if defined(DISPLAY_SSD1306)
 
 #include <SSD1306Wire.h>
-#define cMediumFont ArialMT_Plain_10
+#define cMediumFont ArialMT_Plain_16
 
 class WelcomeSSD1306 : public Welcome
 {
