@@ -54,9 +54,9 @@ cache:
         - "~/.platformio"
 
 env:
-    - PLATFORMIO_CI_SRC=main.cpp PLATFORMIO_BUILD_FLAGS="-Ddisplay=DISPLAY_SERIAL"
-    - PLATFORMIO_CI_SRC=main.cpp PLATFORMIO_BUILD_FLAGS="-Ddisplay=DISPLAY_SSD1306"
-    - PLATFORMIO_CI_SRC=main.cpp PLATFORMIO_BUILD_FLAGS="-Ddisplay=DISPLAY_U8G2"
+    - PLATFORMIO_CI_SRC=src/main.cpp PLATFORMIO_BUILD_FLAGS="-Ddisplay=DISPLAY_SERIAL"
+    - PLATFORMIO_CI_SRC=src/main.cpp PLATFORMIO_BUILD_FLAGS="-Ddisplay=DISPLAY_SSD1306"
+    - PLATFORMIO_CI_SRC=src/main.cpp PLATFORMIO_BUILD_FLAGS="-Ddisplay=DISPLAY_U8G2"
 
 install:
     - pip install -U platformio
