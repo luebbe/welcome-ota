@@ -54,12 +54,13 @@ cache:
         - "~/.platformio"
 
 env:
-    - PLATFORMIO_CI_SRC=src/main.cpp PLATFORMIO_BUILD_FLAGS="-Ddisplay=DISPLAY_SERIAL"
-    - PLATFORMIO_CI_SRC=src/main.cpp PLATFORMIO_BUILD_FLAGS="-Ddisplay=DISPLAY_SSD1306"
-    - PLATFORMIO_CI_SRC=src/main.cpp PLATFORMIO_BUILD_FLAGS="-Ddisplay=DISPLAY_U8G2"
+    - PLATFORMIO_CI_SRC=src/main.cpp PLATFORMIO_BUILD_FLAGS="-D display=DISPLAY_SERIAL"
+    - PLATFORMIO_CI_SRC=src/main.cpp PLATFORMIO_BUILD_FLAGS="-D display=DISPLAY_SSD1306"
+    - PLATFORMIO_CI_SRC=src/main.cpp PLATFORMIO_BUILD_FLAGS="-D display=DISPLAY_U8G2"
 
 install:
     - pip install -U platformio
+    - export PLATFORMIO_BUILD_FLAGS="-D SERIAL_SPEED=74880"
     - platformio lib -g install https://github.com/marvinroger/homie-esp8266.git#v2.0.0-beta.1
     - platformio lib -g install https://github.com/bblanchon/ArduinoJson.git#v5.10.1
     - platformio lib -g install ESP8266_SSD1306 U8G2
