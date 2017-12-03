@@ -44,22 +44,27 @@
 # Template #2: The project is intended to by used as a library with examples
 #
 
-# language: python
-# python:
-#     - "2.7"
-#
-# sudo: false
-# cache:
-#     directories:
-#         - "~/.platformio"
-#
-# env:
-#     - PLATFORMIO_CI_SRC=path/to/test/file.c
-#     - PLATFORMIO_CI_SRC=examples/file.ino
-#     - PLATFORMIO_CI_SRC=path/to/test/directory
-#
-# install:
-#     - pip install -U platformio
-#
-# script:
-#     - platformio ci --lib="." --board=ID_1 --board=ID_2 --board=ID_N
+language: python
+python:
+    - "2.7"
+
+sudo: false
+cache:
+    directories:
+        - "~/.platformio"
+
+env:
+    - PLATFORMIO_CI_SRC=main.cpp PLATFORMIO_BUILD_FLAGS="-Ddisplay=DISPLAY_SERIAL"
+    - PLATFORMIO_CI_SRC=main.cpp PLATFORMIO_BUILD_FLAGS="-Ddisplay=DISPLAY_SSD1306"
+    - PLATFORMIO_CI_SRC=main.cpp PLATFORMIO_BUILD_FLAGS="-Ddisplay=DISPLAY_U8G2"
+
+install:
+    - pip install -U platformio
+    - platformio lib install https://github.com/marvinroger/homie-esp8266.git#v2.0.0-beta.1
+    - platformio lib install https://github.com/bblanchon/ArduinoJson.git#v5.10.1
+    - platformio lib install ESP8266_SSD1306
+    - platformio lib install U8G2
+    - platformio lib install SPI
+
+script:
+    - platformio ci --lib="." --board=esp12e
