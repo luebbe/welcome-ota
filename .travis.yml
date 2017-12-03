@@ -64,7 +64,6 @@ install:
     - platformio lib install https://github.com/bblanchon/ArduinoJson.git#v5.10.1
     - platformio lib install ESP8266_SSD1306
     - platformio lib install U8G2
-    - platformio lib install SPI
 
 script:
     - platformio ci --lib="." --board=esp12e
