@@ -1,9 +1,9 @@
 # Homie OTA
 Small helpers for OTA (over the air update) and status display.
 
-[![GitHub release](https://img.shields.io/github/release/luebbe/homie-ota.svg?style=flat)](https://github.com/luebbe/homie-ota/releases)
 [![Travis](https://img.shields.io/travis/luebbe/homie-ota.svg?branch=master&style=flat)](https://travis-ci.org/luebbe/homie-ota)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat)](https://opensource.org/licenses/MIT)
+[![GitHub release](https://img.shields.io/github/release/luebbe/homie-ota.svg?style=flat)](https://github.com/luebbe/homie-ota/releases)
 
 ## main.cpp
 Basic OTA example using Homie and ArduinoOTA using one of the three classes from ota.cpp
