@@ -8,8 +8,8 @@
 #include "ota.hpp"
 #include "welcome.hpp"
 
-const int PIN_SDA = 5;
-const int PIN_SCL = 4;
+const int PIN_SDA = 4; // =D2 on Wemos
+const int PIN_SCL = 5; // =D1 on Wemos
 
 // ======================================================================
 // Setup OTA logging via SSD1306 OLED display driver and Homie logger
