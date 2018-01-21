@@ -11,25 +11,28 @@ Welcome::Welcome(const char *fw_name, const char *fw_version)
 
 void Welcome::show()
 {
-  delay(1000);
-  Serial.println();
-  Serial.printf("Device: %s\r\n", (char *)WiFi.hostname().c_str());
-  Serial.printf("ChipID: %06X\r\n", ESP.getChipId());
-  Serial.printf("Last reset reason: %s\r\n", (char *)ESP.getResetReason().c_str());
-  Serial.printf("Memory size: %d bytes\r\n", ESP.getFlashChipSize());
-  Serial.printf("Free heap: %d bytes\r\n", ESP.getFreeHeap());
+  Homie.getLogger()
+      << endl
+      << endl
+      << "Device: " << WiFi.hostname() << endl
+      << "ChipID: " << ESP.getChipId() << endl
+      << "Last reset reason: " << ESP.getResetReason() << endl
+      << "Memory size: " << ESP.getFlashChipSize() << " bytes" << endl
+      << "Free heap: " << ESP.getFreeHeap() << " bytes" << endl;
+
   FSInfo fs_info;
   if (SPIFFS.info(fs_info))
   {
-    Serial.printf("File system total size: %d bytes\r\n", fs_info.totalBytes);
-    Serial.printf("            used size : %d bytes\r\n", fs_info.usedBytes);
-    Serial.printf("            block size: %d bytes\r\n", fs_info.blockSize);
-    Serial.printf("            page size : %d bytes\r\n", fs_info.pageSize);
-    Serial.printf("            max files : %d\r\n", fs_info.maxOpenFiles);
-    Serial.printf("            max length: %d\r\n", fs_info.maxPathLength);
+    Homie.getLogger()
+        << "File system total size: " << fs_info.totalBytes << " bytes" << endl
+        << "            used size : " << fs_info.usedBytes << " bytes" << endl
+        << "            block size: " << fs_info.blockSize << " bytes" << endl
+        << "            page size : " << fs_info.pageSize << " bytes" << endl
+        << "            max files : " << fs_info.maxOpenFiles << endl
+        << "            max length: " << fs_info.maxPathLength << endl;
   }
-  Serial.println();
-  Serial.println();
+  Homie.getLogger() << endl
+                    << endl;
 }
 
 // -----------------------------------------------------------------------------
