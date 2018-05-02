@@ -25,6 +25,8 @@ public:
 
 #include <SSD1306Wire.h>
 #define cMediumFont ArialMT_Plain_16
+#define DISPLAY_HEIGHT 64
+#define DISPLAY_WIDTH 128
 
 class WelcomeSSD1306 : public Welcome
 {
