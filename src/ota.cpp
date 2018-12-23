@@ -28,6 +28,8 @@ String OtaLogger::getErrorMessage(ota_error_t error)
     return "Receive Failed";
   else if (error == OTA_END_ERROR)
     return "End Failed";
+  else 
+    return "Unknown Error";
 };
 
 void OtaLogger::setup(uint16_t port, const char *password)
@@ -36,7 +38,7 @@ void OtaLogger::setup(uint16_t port, const char *password)
   ArduinoOTA.setPort(port);
   ArduinoOTA.setHostname(WiFi.hostname().c_str()); // Hostname defaults to esp8266-[ChipID]
 
-  if (password != "")
+  if (not strcmp(password, ""))
   {
     ArduinoOTA.setPassword(password);
   }
@@ -88,7 +90,7 @@ void OtaLogger::onError(ota_error_t error)
 
 void OtaLogger::onProgress(unsigned int progress, unsigned int total)
 {
-  static int lastprogress = -1;
+  static unsigned int lastprogress = 0;
   unsigned int curprogress = (progress / (total / 100));
   if (lastprogress != curprogress)
   {
