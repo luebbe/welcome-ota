@@ -14,9 +14,9 @@ Developed using [PlatformIO](https://github.com/platformio)
 
 ## ota.cpp
 Helper classes that display the over the air update status on an OLED display using different drivers. Uncomment the desired version in platformio.ini
-*  plain serial using Homie.getlogger()
-*  [ssd1306 library](https://github.com/squix78/esp8266-oled-ssd1306.git)
-*  [u8g2 library](https://github.com/olikraus/u8g2.git)
+  * plain serial using Homie.getlogger()
+  * [ssd1306 library](https://github.com/squix78/esp8266-oled-ssd1306.git)
+  * [u8g2 library](https://github.com/olikraus/u8g2.git)
 
 ## welcome.cpp
 Helper that displays info about the esp, reset reason and more on the serial console upon boot. If an OLED display is attached, it displays the firmware name and version on the OLED display. It uses the same defines as ```ota.cpp```
