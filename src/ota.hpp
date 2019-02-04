@@ -32,7 +32,7 @@ protected:
   virtual void onProgress(unsigned int progress, unsigned int total);
 
 public:
-  OtaLogger(TOtaCallback otaCallback = NULL);
+  explicit OtaLogger(TOtaCallback otaCallback = NULL);
 
   virtual void setup(uint16_t port = 8266, const char *password = "");
   virtual void loop();
@@ -51,7 +51,7 @@ protected:
   void onError(ota_error_t error) override;
 
 public:
-  OtaDisplay(TOtaCallback otaCallback = NULL);
+  explicit OtaDisplay(TOtaCallback otaCallback = NULL);
 };
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ protected:
   void onProgress(unsigned int progress, unsigned int total) override;
 
 public:
-  OtaDisplaySSD1306(OLEDDisplay &display, TOtaCallback otaCallback = NULL);
+  explicit OtaDisplaySSD1306(OLEDDisplay &display, TOtaCallback otaCallback = NULL);
 
   void setup(uint16_t port = 8266, const char *password = "") override;
 };
@@ -99,7 +99,7 @@ protected:
   void onProgress(unsigned int progress, unsigned int total) override;
 
 public:
-  OtaDisplayU8G2(U8G2 &display, TOtaCallback otaCallback = NULL);
+  explicit OtaDisplayU8G2(U8G2 &display, TOtaCallback otaCallback = NULL);
 
   void setup(uint16_t port = 8266, const char *password = "") override;
 };
