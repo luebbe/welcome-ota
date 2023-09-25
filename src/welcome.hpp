@@ -1,7 +1,17 @@
 #pragma once
 
 #include <Arduino.h>
-#include <Homie.h>
+#include <ESP8266WiFi.h>
+
+// #define SHOW_SPIFFS_INFO
+// #define SHOW_LITTLEFS_INFO
+
+#if defined(SHOW_SPIFFS_INFO) || defined(SHOW_LITTLEFS_INFO)
+#include "FS.h"
+#if defined(SHOW_LITTLEFS_INFO)
+#include <LittleFS.h>
+#endif
+#endif
 
 // -----------------------------------------------------------------------------
 // Base class using just serial logging
@@ -12,6 +22,7 @@ class Welcome
 protected:
   const char *_fw_name;
   const char *_fw_version;
+  Print *_logger;
 
 public:
   Welcome(const char *fw_name, const char *fw_version);

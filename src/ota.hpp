@@ -9,13 +9,13 @@
 
 #pragma once
 
-#include <Homie.h> // for Homie logger output
-#include <ArduinoOTA.h>
+#include <Arduino.h>
+#include "ArduinoOTA.h"
 
 typedef std::function<void(void)> TOtaCallback;
 
 // -----------------------------------------------------------------------------
-// OTA info via Homie logger
+// OTA info via logger
 // -----------------------------------------------------------------------------
 
 class OtaLogger
@@ -24,6 +24,7 @@ private:
   TOtaCallback _otaCallback;
 
 protected:
+  Print *_logger;
   String getErrorMessage(ota_error_t error);
 
   virtual void onStart();

@@ -61,9 +61,8 @@ env:
 install:
     - pip install -U platformio
     - export PLATFORMIO_BUILD_FLAGS="-D SERIAL_SPEED=74880"
-    - platformio lib -g install https://github.com/marvinroger/homie-esp8266.git#v2.0.0-beta.1
-    - platformio lib -g install https://github.com/bblanchon/ArduinoJson.git#v5.10.1
     - platformio lib -g install ESP8266_SSD1306 U8G2
 
 script:
+    - touch secrets.h
     - platformio ci --lib="." --board=esp12e

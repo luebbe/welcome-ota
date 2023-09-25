@@ -1,18 +1,26 @@
-#define FW_VERSION "1.0.2"
+#define FW_VERSION "2.0.0"
 
 // Default OTA Progress is shown on the serial console.
 // Uncomment the line corresponding to the progress class you want to use
 // in platformio.ini
 
-#include <Homie.h>
+#include <ESP8266WiFi.h>
 #include "ota.hpp"
 #include "welcome.hpp"
+
+// Create a secrets.h that contains your Wifi credentials
+#include "secrets.h"
+
+#ifndef WIFI_SSID
+#define WIFI_SSID "myssid"
+#define WIFI_PASS "mypass"
+#endif
 
 const int PIN_SDA = 4; // =D2 on Wemos
 const int PIN_SCL = 5; // =D1 on Wemos
 
 // ======================================================================
-// Setup OTA logging via SSD1306 OLED display driver and Homie logger
+// Setup OTA logging via SSD1306 OLED display driver and logger
 //
 #if defined(DISPLAY_SSD1306)
 #define FW_NAME "ota-ssd1306"
@@ -25,7 +33,7 @@ OtaDisplaySSD1306 ota(display, NULL);
 WelcomeSSD1306 welcome(display, FW_NAME, FW_VERSION);
 
 // ======================================================================
-// Setup OTA logging via U8G2 OLED display driver and Homie logger
+// Setup OTA logging via U8G2 OLED display driver and logger
 //
 #elif defined(DISPLAY_U8G2)
 #define FW_NAME "ota-u8g2"
@@ -38,7 +46,7 @@ OtaDisplayU8G2 ota(u8g2, NULL);
 WelcomeU8G2 welcome(u8g2, FW_NAME, FW_VERSION);
 
 // ======================================================================
-// Setup OTA logging via Homie logger
+// Setup OTA logging via logger
 //
 #else
 #define FW_NAME "ota-basic-serial"
@@ -46,40 +54,20 @@ OtaLogger ota;
 Welcome welcome(FW_NAME, FW_VERSION);
 #endif
 
-void setupHandler()
-{
-  // This is called after the MQTT_CONNECTED event
-  ota.setup();
-}
-
-void loopHandler()
-{
-  // This is only called by Homie when WiFi is connected
-  ota.loop();
-}
 
 void setup()
 {
   Serial.begin(SERIAL_SPEED);
-  Serial << endl
-         << endl;
 
-  Homie_setFirmware(FW_NAME, FW_VERSION);
-
-  // show state and last reset reason
+  // show info about the chip (on serial)zk,.
   welcome.show();
 
-  // before Homie.setup()
-  Homie.disableResetTrigger();
-  Homie.disableLedFeedback();
-
-  Homie.setSetupFunction(setupHandler);
-  Homie.setLoopFunction(loopHandler);
-
-  Homie.setup();
+  // connect to Wifi
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  ota.setup();
 }
 
 void loop()
 {
-  Homie.loop();
+  ota.loop();
 }

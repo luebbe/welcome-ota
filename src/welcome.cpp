@@ -5,34 +5,40 @@
 // -----------------------------------------------------------------------------
 
 Welcome::Welcome(const char *fw_name, const char *fw_version)
-    : _fw_name(fw_name), _fw_version(fw_version)
+    : _fw_name(fw_name), _fw_version(fw_version), _logger(&Serial)
 {
 }
 
 void Welcome::show()
 {
-  Homie.getLogger()
-      << endl
-      << endl
-      << "Device: " << WiFi.hostname() << endl
-      << "ChipID: " << ESP.getChipId() << endl
-      << "Last reset reason: " << ESP.getResetReason() << endl
-      << "Memory size: " << ESP.getFlashChipSize() << " bytes" << endl
-      << "Free heap: " << ESP.getFreeHeap() << " bytes" << endl;
+  _logger->print("\r\n");
+  _logger->printf("Device: %s\r\n", WiFi.hostname().c_str());
+  _logger->printf("ChipID: %d\r\n", ESP.getChipId());
+  _logger->printf("Last reset reason: %s\r\n", ESP.getResetReason().c_str());
+  _logger->printf("Flash size: %d bytes\r\n", ESP.getFlashChipSize());
+  _logger->printf("Free heap: %d bytes\r\n", ESP.getFreeHeap());
 
+#if defined(SHOW_SPIFFS_INFO) || defined(SHOW_LITTLEFS_INFO)
   FSInfo fs_info;
-  if (SPIFFS.info(fs_info))
+#if defined(SHOW_SPIFFS_INFO)
+  if (!SPIFFS.info(fs_info))
+    _logger->printf("No SPIFFS file system found");
+  else
+#else
+  if (!LittleFS.info(fs_info))
+    _logger->printf("No LittleFS file system found");
+  else
+#endif
   {
-    Homie.getLogger()
-        << "File system total size: " << fs_info.totalBytes << " bytes" << endl
-        << "            used size : " << fs_info.usedBytes << " bytes" << endl
-        << "            block size: " << fs_info.blockSize << " bytes" << endl
-        << "            page size : " << fs_info.pageSize << " bytes" << endl
-        << "            max files : " << fs_info.maxOpenFiles << endl
-        << "            max length: " << fs_info.maxPathLength << endl;
+    _logger->printf("total size: %d bytes", fs_info.totalBytes);
+    _logger->printf("used size : %d bytes", fs_info.usedBytes);
+    _logger->printf("block size: %d bytes", fs_info.blockSize);
+    _logger->printf("page size : %d bytes", fs_info.pageSize);
+    _logger->printf("max files : %d bytes", fs_info.maxOpenFiles);
+    _logger->printf("max length: %d bytes", fs_info.maxPathLength);
   }
-  Homie.getLogger() << endl
-                    << endl;
+#endif
+  _logger->print("\r\n");
 }
 
 // -----------------------------------------------------------------------------

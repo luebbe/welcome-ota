@@ -10,11 +10,13 @@
 #include "ota.hpp"
 
 // -----------------------------------------------------------------------------
-// OTA info via Homie logger
+// OTA info via logger
 // -----------------------------------------------------------------------------
 
 OtaLogger::OtaLogger(TOtaCallback otaCallback)
-    : _otaCallback(otaCallback){};
+    : _otaCallback(otaCallback), _logger(&Serial)
+{
+}
 
 String OtaLogger::getErrorMessage(ota_error_t error)
 {
@@ -28,13 +30,13 @@ String OtaLogger::getErrorMessage(ota_error_t error)
     return "Receive Failed";
   else if (error == OTA_END_ERROR)
     return "End Failed";
-  else 
+  else
     return "Unknown Error";
 };
 
 void OtaLogger::setup(uint16_t port, const char *password)
 {
-  Homie.getLogger() << "• OTA - Setup";
+  _logger->print("• OTA - Setup");
   ArduinoOTA.setPort(port);
   ArduinoOTA.setHostname(WiFi.hostname().c_str()); // Hostname defaults to esp8266-[ChipID]
 
@@ -43,24 +45,20 @@ void OtaLogger::setup(uint16_t port, const char *password)
     ArduinoOTA.setPassword(password);
   }
 
-  ArduinoOTA.onStart([this]() {
-    onStart();
-  });
+  ArduinoOTA.onStart([this]()
+                     { onStart(); });
 
-  ArduinoOTA.onEnd([this]() {
-    onEnd();
-  });
+  ArduinoOTA.onEnd([this]()
+                   { onEnd(); });
 
-  ArduinoOTA.onProgress([this](unsigned int progress, unsigned int total) {
-    onProgress(progress, total);
-  });
+  ArduinoOTA.onProgress([this](unsigned int progress, unsigned int total)
+                        { onProgress(progress, total); });
 
-  ArduinoOTA.onError([this](ota_error_t error) {
-    onError(error);
-  });
+  ArduinoOTA.onError([this](ota_error_t error)
+                     { onError(error); });
 
   ArduinoOTA.begin();
-  Homie.getLogger() << " done" << endl;
+  _logger->println(" done");
 };
 
 void OtaLogger::loop()
@@ -70,7 +68,7 @@ void OtaLogger::loop()
 
 void OtaLogger::onStart()
 {
-  Homie.getLogger() << "• OTA - Start" << endl;
+  _logger->println("• OTA - Start");
   if (_otaCallback)
   {
     _otaCallback();
@@ -79,13 +77,12 @@ void OtaLogger::onStart()
 
 void OtaLogger::onEnd()
 {
-  Homie.getLogger() << endl
-                    << "• OTA - End" << endl;
+  _logger->println("• OTA - End");
 };
 
 void OtaLogger::onError(ota_error_t error)
 {
-  Homie.getLogger() << "• OTA - Error " << getErrorMessage(error) << " : " << endl;
+  _logger->printf("• OTA - Error %s", getErrorMessage(error).c_str());
 };
 
 void OtaLogger::onProgress(unsigned int progress, unsigned int total)
@@ -97,7 +94,7 @@ void OtaLogger::onProgress(unsigned int progress, unsigned int total)
     lastprogress = curprogress;
     if (curprogress > 0)
     {
-      Homie.getLogger() << ".";
+      _logger->print(".");
       if (curprogress % 25 == 0)
       {
         const char *sp;
@@ -109,7 +106,7 @@ void OtaLogger::onProgress(unsigned int progress, unsigned int total)
         {
           sp = "";
         };
-        Homie.getLogger() << " [" << sp << curprogress << "%]" << endl;
+        _logger->printf(" [%s%d%%]\r\n", sp, curprogress);
       }
     }
   }
@@ -154,9 +151,7 @@ OtaDisplaySSD1306::OtaDisplaySSD1306(OLEDDisplay &display, TOtaCallback otaCallb
 
 void OtaDisplaySSD1306::setup(uint16_t port, const char *password)
 {
-  // Don't do anything with the display here (setup, init, ...)
-  // It'll crash Homie
-  Homie.getLogger() << "• OTA - OtaDisplaySSD1306" << endl;
+  _logger->println("• OTA - OtaDisplaySSD1306");
   OtaLogger::setup(port, password);
 }
 
@@ -200,9 +195,7 @@ OtaDisplayU8G2::OtaDisplayU8G2(U8G2 &display, TOtaCallback otaCallback)
 
 void OtaDisplayU8G2::setup(uint16_t port, const char *password)
 {
-  // Don't do anything with the display here (setup, init, ...)
-  // It'll crash Homie
-  Homie.getLogger() << "• OTA - OtaDisplayU8G2" << endl;
+  _logger->println("• OTA - OtaDisplayU8G2");
   OtaLogger::setup(port, password);
 }
 

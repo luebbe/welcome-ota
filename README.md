@@ -1,25 +1,22 @@
-# Homie OTA
+# Welcome - OTA
 
-Small helpers for OTA (over the air update) and status display.
+Small helpers for OTA (over the air update) and status display. Displays status information via serial upon starting. Displays OTA progres.
 
-[![Travis](https://img.shields.io/travis/luebbe/homie-ota.svg?branch=master&style=flat)](https://travis-ci.org/luebbe/homie-ota)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/016749a7abc84198bc8ec26a6ab9806a)](https://www.codacy.com/app/luebbe/homie-ota/dashboard)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat)](https://opensource.org/licenses/MIT)
-[![GitHub release](https://img.shields.io/github/release/luebbe/homie-ota.svg?style=flat)](https://github.com/luebbe/homie-ota/releases)
+[![GitHub release](https://img.shields.io/github/release/luebbe/welcome-ota.svg?style=flat)](https://github.com/luebbe/welcome-ota/releases)
 
 ## main.cpp
 
-Basic OTA example using Homie and ArduinoOTA using one of the three classes from ota.cpp
+Basic OTA example using and ArduinoOTA using one of the three classes from ota.cpp
 
-These are additions for software Projects using the [Homie (v2.0)](https://github.com/marvinroger/homie-esp8266) framework.
 Developed using [PlatformIO](https://github.com/platformio)
 
 ## ota.cpp
 
 Helper classes that display the over the air update status on an OLED display using different drivers. Uncomment the desired version in platformio.ini
 
-- plain serial using Homie.getlogger()
-- [ssd1306 library](https://github.com/squix78/esp8266-oled-ssd1306.git)
+- plain serial 
+- [ssd1306 library](https://github.com/ThingPulse/esp8266-oled-ssd1306)
 - [u8g2 library](https://github.com/olikraus/u8g2.git)
 
 ## welcome.cpp
