@@ -43,9 +43,10 @@ class WelcomeSSD1306 : public Welcome
 {
 private:
   OLEDDisplay &_display;
+  bool _flipScreen;
 
 public:
-  WelcomeSSD1306(OLEDDisplay &display, const char *fw_name, const char *fw_version);
+  WelcomeSSD1306(OLEDDisplay &display, const char *fw_name, const char *fw_version, bool flipScreen = false);
   void show() override;
 };
 

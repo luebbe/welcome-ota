@@ -45,8 +45,8 @@ void Welcome::show()
 // Welcome message via 128x64 OLED Display using the esp8266-oled-ssd1306 library
 // -----------------------------------------------------------------------------
 #if defined(DISPLAY_SSD1306)
-WelcomeSSD1306::WelcomeSSD1306(OLEDDisplay &display, const char *fw_name, const char *fw_version)
-    : Welcome(fw_name, fw_version), _display(display)
+WelcomeSSD1306::WelcomeSSD1306(OLEDDisplay &display, const char *fw_name, const char *fw_version, bool flipScreen)
+    : Welcome(fw_name, fw_version), _display(display), _flipScreen(flipScreen)
 {
 }
 
@@ -57,7 +57,8 @@ void WelcomeSSD1306::show()
   // initialize display
   _display.init();
   _display.clear();
-  _display.flipScreenVertically();
+  if (_flipScreen)
+    _display.flipScreenVertically();
   _display.setColor(WHITE);
   _display.setFont(cMediumFont);
   _display.setTextAlignment(TEXT_ALIGN_CENTER);
